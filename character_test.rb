@@ -45,42 +45,6 @@ describe Character do
     @character.hit_points.must_equal 5
   end
 
-  it "should be able to roll attack die" do
-    (1..20).each do |attack|
-      @character.attack attack, @opponent
-    end
-  end
-
-  it "should throw an ArgumentError for invalid attack rolls" do
-    [31, :stupid, 99, 0, -1].each do |attack| 
-      assert_raises(ArgumentError) {
-        @character.attack attack, @opponent
-      }
-    end
-  end
-
-  it "should be able to attack an opponent" do
-    @character.attack 5, @opponent
-  end
-
-  it "hit equals true if opponent armor class is less than the attack roll" do
-    (@character.attack 5, @opponent).must_equal false
-    (@character.attack 12, @opponent).must_equal true
-    (@character.attack 10, @opponent).must_equal true
-  end
-
-  it "should damage the oppoonent 1 point if the attack is a hit" do
-    original_hp = @opponent.hit_points
-    @character.attack 11, @opponent
-    @opponent.hit_points.must_equal original_hp - 1
-  end
-
-  it "should deal double damage if the roll is a natural 20" do
-    original_hp = @opponent.hit_points
-    @character.attack 20, @opponent
-    @opponent.hit_points.must_equal original_hp - 2
-  end
-
   it "should be alive" do
     @character.is_alive?.must_equal true
   end

@@ -12,12 +12,16 @@ module Attack
   end
 
   def calculate_damage roll, opponent
-    damage = 1
+    damage = 1 + calculate_strength_adjustment
 
     if roll == 20
       damage = damage * 2
     end
 
     damage
+  end
+
+  def calculate_strength_adjustment
+    @abilities[:strength].modifier
   end
 end
