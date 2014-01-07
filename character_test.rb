@@ -94,4 +94,18 @@ describe Character do
     @character.hit_points = -1
     @character.is_alive?.must_equal false
   end
+
+  it "should have abilities of strength, dexterity, constitution, wisdom, intelligence, and charisma" do
+    [:strength, :dexterity, :constitution, :wisdom, :intelligence, :charisma].each do |ability|
+      @character.abilities.keys.must_include ability
+      @character.abilities[ability].name.must_equal ability 
+    end
+  end
+
+  it "should have abilities with a default value of 10" do
+    [:strength, :dexterity, :constitution, :wisdom, :intelligence, :charisma].each do |ability|
+      @character.abilities[ability].score.must_equal 10
+    end
+  end
+
 end

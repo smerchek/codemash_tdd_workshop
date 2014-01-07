@@ -1,12 +1,22 @@
 require File.join(File.dirname(__FILE__), 'attack.rb')
+require File.join(File.dirname(__FILE__), 'ability.rb')
 
+DEFAULT_ABILITY = 10
 class Character
-  attr_accessor :name, :alignment, :hit_points, :armor_class
+  attr_accessor :name, :alignment, :hit_points, :armor_class, :abilities
   include Attack
 
   def initialize
     @hit_points = 5
     @armor_class = 10
+    @abilities = { 
+      strength: Ability.new(:strength), 
+      dexterity: Ability.new(:dexterity),
+      constitution: Ability.new(:constitution),
+      wisdom: Ability.new(:wisdom),
+      intelligence: Ability.new(:intelligence),
+      charisma: Ability.new(:charisma)
+   }
   end
 
   def alignment= alignment
