@@ -8,6 +8,16 @@ describe Character do
     @opponent = Character.new
   end
 
+  def attack roll
+    @character.attack roll, @opponent
+  end
+
+  def experience total
+    for i in (1..total/10) do
+      attack 20
+    end
+  end
+
   it "should be a Character" do
     @character.must_be_instance_of Character
   end
@@ -89,4 +99,44 @@ describe Character do
     expected_hit_points = 1
     @character.hit_points.must_equal expected_hit_points
   end
+
+  it "should have a 0 experience points by default" do
+    @character.experience.must_equal 0
+  end
+
+  it "should have a default level of 1" do
+    @character.level.must_equal 1
+  end
+
+  it "should gain a level every 1000 xp" do
+    experience 1000
+
+    @character.level.must_equal 2
+    
+    experience 500
+
+    @character.level.must_equal 2
+
+    experience 1000
+
+    @character.level.must_equal 3
+  end
+
+  it "should gain 5 hitpoints after level up" do
+    experience 1000
+    @character.hit_points.must_equal 10
+  end
+
+  it "should gain 5 hitpoints plus constitution modifier after level up" do
+    experience 1000
+    @character.constitution.score = 1
+    @character.hit_points.must_equal 2
+  end
+
+  it "should gain 7 hitpoints at level 2 with a constitution of 15" do
+    experience 1000
+    @character.constitution.score = 15
+    @character.hit_points.must_equal 14
+  end
+
 end

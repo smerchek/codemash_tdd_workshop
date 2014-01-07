@@ -3,7 +3,8 @@ require File.join(File.dirname(__FILE__), 'ability.rb')
 
 class Character
   attr_accessor :name, :alignment
-  attr_reader   :armor_class, :strength, :dexterity, :constitution, :wisdom, :intelligence, :charisma
+  attr_reader   :armor_class, :strength, :dexterity, :constitution, 
+                :wisdom, :intelligence, :charisma, :experience
   include Attack
 
   def initialize
@@ -16,6 +17,7 @@ class Character
     @intelligence = Ability.new(:intelligence)
     @charisma = Ability.new(:charisma)
     @damage_taken = 0
+    @experience = 0
   end
 
   def alignment= alignment
@@ -39,11 +41,15 @@ class Character
   end
 
   def max_hit_points
-    [1, @constitution.modifier + @base_hit_points].max
+    [1, @constitution.modifier + @base_hit_points].max * level
   end
 
   def hit_points
     max_hit_points - @damage_taken
+  end
+
+  def level
+    1 + @experience / 1000
   end
 end
 

@@ -13,8 +13,14 @@ describe Attack do
     @original_opponent_hp - @opponent.hit_points
   end
 
-  def attack roll
-    @character.attack roll, @opponent
+  def attack roll, opponent = @opponent
+    @character.attack roll, opponent
+  end
+
+  def experience total
+    for i in (1..total/10) do
+      attack 20, Character.new
+    end
   end
 
   it "should be able to roll attack die" do
@@ -97,5 +103,27 @@ describe Attack do
     expected_damage = 1
     attack 15
     damage_dealt.must_equal expected_damage
+  end
+
+  it "character should gain 10 experience after a successful attack" do
+    attack 20
+    @character.experience.must_equal 10
+  end
+
+  it "character should not gain 10 experience for an non-successful attack" do
+    attack 1
+    @character.experience.must_equal 0
+  end
+
+  it "should add one to attack roll for every even level achieved" do 
+    experience 1000
+    attack 9
+    damage_dealt.wont_equal 0
+  end
+
+  it "should add one to attack roll for every even level achieved" do 
+    experience 1000
+    attack 8
+    damage_dealt.must_equal 0
   end
 end

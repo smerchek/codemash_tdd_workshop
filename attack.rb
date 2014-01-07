@@ -4,8 +4,9 @@ module Attack
       throw ArgumentError
     end
 
-    effective_roll = roll + calculate_strength_adjustment
+    effective_roll = roll + @strength.modifier + level_bonus
     if effective_roll >= opponent.armor_class
+      @experience += 10
       opponent.damage calculate_damage(roll, opponent)
     end
 
@@ -13,7 +14,7 @@ module Attack
   end
 
   def calculate_damage roll, opponent
-    damage = 1 + calculate_strength_adjustment
+    damage = 1 + @strength.modifier
 
     if roll == 20
       damage = damage * 2
@@ -22,7 +23,7 @@ module Attack
     [1, damage].max
   end
 
-  def calculate_strength_adjustment
-    @strength.modifier
+  def level_bonus
+    level / 2
   end
 end
