@@ -1,7 +1,6 @@
 require File.join(File.dirname(__FILE__), 'attack.rb')
 require File.join(File.dirname(__FILE__), 'ability.rb')
 
-DEFAULT_ABILITY = 10
 class Character
   attr_accessor :name, :alignment, :hit_points, :armor_class, :abilities
   include Attack
