@@ -56,7 +56,7 @@ describe Attack do
   it "should deal extra damage equal to the strength modifier" do
     strength_modifier = 2
     expected_damage = 1 + strength_modifier
-    @character.abilities[:strength].score = 14
+    @character.strength.score = 14
     attack 15
     damage_dealt.must_equal expected_damage
   end
@@ -64,9 +64,30 @@ describe Attack do
   it "should deal extra damage equal to the strength modifier" do
     strength_modifier = -2
     expected_damage = 1 + strength_modifier
-    @character.abilities[:strength].score = 7
+    @character.strength.score = 7
     attack 15
     damage_dealt.must_equal expected_damage
   end
 
+  it "should add the strength modifier to the roll" do
+    strength_modifier = -2
+    @character.strength.score = 7
+    attack 10
+    damage_dealt.must_equal 0
+  end
+
+  it "should add the strength modifier to the roll" do
+    strength_modifier = 2
+    @character.strength.score = 14
+    attack 10
+    damage_dealt.wont_equal 0
+  end
+
+  it "should ignore strength modifier when checking for a natural 20" do
+    strength_modifier = 3
+    expected_damage = 4
+    @character.strength.score = 17
+    attack 17
+    damage_dealt.must_equal expected_damage
+  end
 end

@@ -4,11 +4,12 @@ module Attack
       throw ArgumentError
     end
 
-    if roll >= opponent.armor_class
+    effective_roll = roll + calculate_strength_adjustment
+    if effective_roll >= opponent.armor_class
       opponent.damage calculate_damage(roll, opponent)
     end
 
-    roll >= opponent.armor_class
+    effective_roll >= opponent.armor_class
   end
 
   def calculate_damage roll, opponent
@@ -22,6 +23,6 @@ module Attack
   end
 
   def calculate_strength_adjustment
-    @abilities[:strength].modifier
+    @strength.modifier
   end
 end
