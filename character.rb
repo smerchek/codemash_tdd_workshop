@@ -1,5 +1,13 @@
+require File.join(File.dirname(__FILE__), 'attack.rb')
+
 class Character
-  attr_accessor :name, :alignment
+  attr_accessor :name, :alignment, :hit_points, :armor_class
+  include Attack
+
+  def initialize
+    @hit_points = 5
+    @armor_class = 10
+  end
 
   def alignment= alignment
     unless [:good, :evil, :neutral].include? alignment
@@ -9,21 +17,12 @@ class Character
     @alignment = alignment
   end
 
-  def armor_class
-    10
+  def damage damage
+    @hit_points -= damage
   end
 
-  def hit_points
-    5
+  def is_alive?
+    hit_points > 0
   end
-
-  def attack roll, opponent
-    if roll < 1 || roll > 20
-      throw ArgumentError
-    end
-
-    roll >= opponent.armor_class
-  end
-
 end
 

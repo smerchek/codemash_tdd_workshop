@@ -68,4 +68,30 @@ describe Character do
     (@character.attack 12, @opponent).must_equal true
     (@character.attack 10, @opponent).must_equal true
   end
+
+  it "should damage the oppoonent 1 point if the attack is a hit" do
+    original_hp = @opponent.hit_points
+    @character.attack 11, @opponent
+    @opponent.hit_points.must_equal original_hp - 1
+  end
+
+  it "should deal double damage if the roll is a natural 20" do
+    original_hp = @opponent.hit_points
+    @character.attack 20, @opponent
+    @opponent.hit_points.must_equal original_hp - 2
+  end
+
+  it "should be alive" do
+    @character.is_alive?.must_equal true
+  end
+
+  it "should be dead with zero hit points" do
+    @character.hit_points = 0
+    @character.is_alive?.must_equal false
+  end
+
+  it "should be dead with less than zero hit points" do
+    @character.hit_points = -1
+    @character.is_alive?.must_equal false
+  end
 end
