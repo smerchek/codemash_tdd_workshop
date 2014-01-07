@@ -50,12 +50,12 @@ describe Character do
   end
 
   it "should be dead with zero hit points" do
-    @character.hit_points = 0
+    @character.damage 5
     @character.is_alive?.must_equal false
   end
 
   it "should be dead with less than zero hit points" do
-    @character.hit_points = -1
+    @character.damage 10
     @character.is_alive?.must_equal false
   end
 
@@ -76,5 +76,17 @@ describe Character do
     @character.dexterity.score = 14
     expected_armor_class = 12
     @character.armor_class.must_equal expected_armor_class
+  end
+
+  it "should add the constitution modifier to the hit point" do
+    @character.constitution.score = 14
+    expected_hit_points = 7
+    @character.hit_points.must_equal expected_hit_points
+  end
+
+  it "constitution modifier should not bring hit points below 1" do
+    @character.constitution.score = 1
+    expected_hit_points = 1
+    @character.hit_points.must_equal expected_hit_points
   end
 end

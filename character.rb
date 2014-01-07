@@ -2,12 +2,12 @@ require File.join(File.dirname(__FILE__), 'attack.rb')
 require File.join(File.dirname(__FILE__), 'ability.rb')
 
 class Character
-  attr_accessor :name, :alignment, :hit_points, :armor_class,
-                :strength, :dexterity, :constitution, :wisdom, :intelligence, :charisma
+  attr_accessor :name, :alignment
+  attr_reader   :armor_class, :strength, :dexterity, :constitution, :wisdom, :intelligence, :charisma
   include Attack
 
   def initialize
-    @hit_points = 5
+    @base_hit_points = 5
     @armor_class = 10
     @strength = Ability.new(:strength) 
     @dexterity = Ability.new(:dexterity)
@@ -15,6 +15,7 @@ class Character
     @wisdom = Ability.new(:wisdom)
     @intelligence = Ability.new(:intelligence)
     @charisma = Ability.new(:charisma)
+    @damage_taken = 0
   end
 
   def alignment= alignment
@@ -26,7 +27,7 @@ class Character
   end
 
   def damage damage
-    @hit_points -= damage
+    @damage_taken += damage
   end
 
   def is_alive?
@@ -35,6 +36,14 @@ class Character
 
   def armor_class
     @dexterity.modifier + @armor_class
+  end
+
+  def max_hit_points
+    [1, @constitution.modifier + @base_hit_points].max
+  end
+
+  def hit_points
+    max_hit_points - @damage_taken
   end
 end
 
