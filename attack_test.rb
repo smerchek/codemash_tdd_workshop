@@ -61,14 +61,6 @@ describe Attack do
     damage_dealt.must_equal expected_damage
   end
 
-  it "should deal extra damage equal to the strength modifier" do
-    strength_modifier = -2
-    expected_damage = 1 + strength_modifier
-    @character.strength.score = 7
-    attack 15
-    damage_dealt.must_equal expected_damage
-  end
-
   it "should add the strength modifier to the roll" do
     strength_modifier = -2
     @character.strength.score = 7
@@ -88,6 +80,22 @@ describe Attack do
     expected_damage = 4
     @character.strength.score = 17
     attack 17
+    damage_dealt.must_equal expected_damage
+  end
+
+   it "should double strength modifier on critical hits" do
+    strength_modifier = 2
+    @character.strength.score = 15
+    expected_damage = 6
+    attack 20
+    damage_dealt.must_equal expected_damage
+  end
+
+  it "minimum damage is always 1" do
+    strength_modifier = -5
+    @character.strength.score = 1
+    expected_damage = 1
+    attack 15
     damage_dealt.must_equal expected_damage
   end
 end

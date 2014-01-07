@@ -19,7 +19,7 @@ module Attack
       damage = damage * 2
     end
 
-    damage
+    [1, damage].max
   end
 
   def calculate_strength_adjustment

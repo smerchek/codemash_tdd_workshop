@@ -72,4 +72,9 @@ describe Character do
     end
   end
 
+  it "should add the dexterity modifier to the armor class" do
+    @character.dexterity.score = 14
+    expected_armor_class = 12
+    @character.armor_class.must_equal expected_armor_class
+  end
 end

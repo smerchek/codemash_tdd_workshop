@@ -32,5 +32,9 @@ class Character
   def is_alive?
     hit_points > 0
   end
+
+  def armor_class
+    @dexterity.modifier + @armor_class
+  end
 end
 
